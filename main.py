@@ -33,7 +33,7 @@ if sys.platform.startswith('linux'):
 quotes = list()
 authors = list()
 
-for i in range(20):
+for i in range(12):
     url = f'https://quotes.toscrape.com/page/{i}/'
 
     req = requests.get(url)
@@ -46,11 +46,11 @@ for i in range(20):
     with open('quote_20_pages.txt', 'a') as txt:
         for line in html.split('\n'):
             if '<span class="text" itemprop="text">' in line:
-                line = line.replace('<span class="text" itemprop="text">', '')
-                quote = line.replace('</span>', '').strip()
+                line = line.replace('<span class="text" itemprop="text">“', '')
+                quote = line.replace('”</span>', '').strip()
                 quotes.append(quote)
-                # txt.write(line)
-                # txt.write('\n')
+                txt.write(line)
+                txt.write('\n')
 
     with open('author_20_pages.txt', 'a') as txt:
         for line in html.split('\n'):
@@ -58,8 +58,8 @@ for i in range(20):
                 line = line.replace('<span>by <small class="author" itemprop="author">', '')
                 author = line.replace('</small>', '').strip()
                 authors.append(author)
-                # txt.write(line)
-                # txt.write('\n')
+                txt.write(line)
+                txt.write('\n')
     
 with open('quotes.csv', 'w') as csvfile:
     writer = csv.writer(csvfile)
